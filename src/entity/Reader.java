@@ -5,14 +5,17 @@
  */
 package entity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author user
  */
-public class Reader {
+public class Reader implements Serializable{
     private String firstName;
     private String lastName;
     private String email;
+    
     
     public Reader(){
     }
