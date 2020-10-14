@@ -5,7 +5,7 @@
  */
 package tools.savers;
 
-import entity.History;
+import entity.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,16 +17,16 @@ import java.io.ObjectOutputStream;
  *
  * @author user
  */
-public class HistorySaver {
-    private final String fileName = "histories";
+public class UserSaver {
+    private final String fileName = "users";
 
-    public void saveHistories(History[] histories) {
+    public void saveUsers(User[] users) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream(fileName);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(histories);
+            oos.writeObject(users);
             oos.flush();
         } catch (FileNotFoundException ex) {
             System.out.println("Не найден файл");
@@ -35,13 +35,13 @@ public class HistorySaver {
         }
     }
 
-    public History[] loadFile() {
+    public User[] loadFile() {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
             fis = new FileInputStream(fileName);
             ois = new ObjectInputStream(fis);
-            return (History[]) ois.readObject();
+            return (User[]) ois.readObject();
         } catch (FileNotFoundException ex) {
             System.out.println("Не найден файл");
         } catch (IOException ex) {
@@ -49,7 +49,7 @@ public class HistorySaver {
         } catch (ClassNotFoundException ex) {
             System.out.println("Ошибка: не найден класс");
         }
-        return new History[10];
+        return new User[10];
     }
     
 }

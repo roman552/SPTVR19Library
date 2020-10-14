@@ -5,6 +5,7 @@
  */
 package sptvr19library;
 
+import security.SecureManager;
 import tools.savers.HistorySaver;
 import tools.savers.ReaderSaver;
 import tools.managers.ReaderManager;
@@ -12,11 +13,13 @@ import tools.savers.BookSaver;
 import entity.Reader;
 import entity.Book;
 import entity.History;
+import entity.User;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 import tools.managers.BookManager;
 import tools.managers.HistoryManager;
+import tools.savers.UserSaver;
 
 /**
  *
@@ -26,10 +29,13 @@ class App {
     private Book[] books = new Book[10];
     private Reader[] readers = new Reader[10];
     private History[] histories = new History[10];
+    private User[] users = new User[10];
     private ReaderManager readerManager = new ReaderManager();
     private BookManager bookManager = new BookManager(); 
     private HistoryManager historyManager = new HistoryManager(); 
     private Calendar c = new GregorianCalendar();
+    private SecureManager secureManager = new SecureManager(); 
+    private User loginedUser;
     public App(){
         BookSaver bookSaver = new BookSaver();
         books = bookSaver.loadFile();
@@ -37,9 +43,14 @@ class App {
         readers = readerSaver.loadFile();
         HistorySaver historySaver = new HistorySaver();
         histories = historySaver.loadFile();
+        UserSaver userSaver = new UserSaver();
+        users = userSaver.loadFile();
     }
     public void run() {
         System.out.println("--- Библиотека ---");
+        this.loginedUser = secureManager.checkTask(users, readers);
+        UserSaver userSaver = new UserSaver();
+        userSaver.saveUsers(users);
         Boolean repeat = true;
         do{
             System.out.println("Список задач: ");
@@ -95,6 +106,7 @@ class App {
                     History history;                
                     history = historyManager.takeOnBookToReader(books, readers);
                     historyManager.addHistoryToArray(history, histories);
+                    historyManager.printListHistories(histories);
                     HistorySaver historySaver = new HistorySaver();
                     historySaver.saveHistories(histories);
                     System.out.println("-----------------------------------");
