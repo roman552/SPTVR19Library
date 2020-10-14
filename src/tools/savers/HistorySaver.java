@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools;
+package tools.savers;
 
 /**
  *
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * @author user
  */
 public class HistorySaver {
-    private String fileName = "histories";
+    private final String fileName = "histories";
     public void saveHistories(History[] histories) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
